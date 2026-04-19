@@ -1,6 +1,6 @@
 # streamdigest
 
-[![CI](https://github.com/OWNER/streamdigest/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/streamdigest/actions/workflows/ci.yml)
+[![CI](https://github.com/sophie-nguyenthuthuy/streamdigest/actions/workflows/ci.yml/badge.svg)](https://github.com/sophie-nguyenthuthuy/streamdigest/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
@@ -52,9 +52,6 @@ but rebuilt around four goals:
                            ▼
                    `streamdigest digest`
 ```
-
-> Badge and link URLs contain `OWNER` as a placeholder. Replace it with your
-> GitHub username/org after you push.
 
 ## Quickstart
 
