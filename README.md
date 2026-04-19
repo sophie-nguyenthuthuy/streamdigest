@@ -1,5 +1,12 @@
 # streamdigest
 
+[![CI](https://github.com/OWNER/streamdigest/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/streamdigest/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![dlt](https://img.shields.io/badge/built%20with-dlt-yellow)](https://dlthub.com)
+[![Prefect](https://img.shields.io/badge/orchestrated%20by-Prefect%203-1E3A8A)](https://docs.prefect.io)
+
 Local-first, orchestrated ingestion + AI enrichment of noisy developer event streams.
 Inspired by the [dlt-kestra-demo](https://github.com/dlt-hub/dlt-kestra-demo),
 but rebuilt around four goals:
@@ -8,6 +15,18 @@ but rebuilt around four goals:
 2. **Smarter AI layer** — one structured call per event producing summary + action items + priority (1–5) + sentiment, with defensive coercion and an eval harness so prompt/model changes don't silently regress.
 3. **Different domain** — primary source is **GitHub notifications** (dev-native, clean PAT auth). Gmail / Slack / Linear are stubbed with implementation plans in their module docstrings.
 4. **Local-first** — **DuckDB** destination and **Ollama** for inference. Runs fully offline; no cloud, no per-row cost.
+
+## Table of contents
+
+- [Architecture](#architecture)
+- [Quickstart](#quickstart)
+- [Docker](#docker)
+- [CLI](#cli)
+- [Layout](#layout)
+- [What's stubbed / deferred](#whats-stubbed--deferred)
+- [Why these choices](#why-these-choices)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Architecture
 
@@ -33,6 +52,9 @@ but rebuilt around four goals:
                            ▼
                    `streamdigest digest`
 ```
+
+> Badge and link URLs contain `OWNER` as a placeholder. Replace it with your
+> GitHub username/org after you push.
 
 ## Quickstart
 
@@ -60,6 +82,20 @@ streamdigest init
 streamdigest run
 streamdigest digest
 ```
+
+## Docker
+
+One-command stack (app + Ollama sidecar):
+
+```bash
+cp .env.example .env             # set GITHUB_TOKEN
+docker compose up -d             # starts Ollama, pulls the model, builds app
+docker compose run --rm app streamdigest run
+docker compose run --rm app streamdigest digest
+```
+
+The Ollama model and DuckDB database both live in named volumes
+(`ollama-models`, `streamdigest-data`), so they survive `compose down`.
 
 ## CLI
 
@@ -97,3 +133,13 @@ tests, RAG over prior events, and the three alt sources.
 | **Ollama over OpenAI** | No API keys, no per-row cost, fully local. `llama3.2:3b` is good enough for triage summaries and a 1–5 priority score. |
 | **Single-call enrichment** | Kestra demo made 2 calls (summary + sentiment). One JSON-mode call is cheaper and lets the model reason jointly — a "review requested" on a PR with failing CI should be higher priority than either signal alone. |
 | **Eval harness from day one** | Local models drift across versions. Fixtures + a pass/fail matrix make model swaps safe. |
+
+## Contributing
+
+Dev setup, coding standards, and PR checklist are in [CONTRIBUTING.md](./CONTRIBUTING.md).
+By participating, you agree to abide by the [Code of Conduct](./CODE_OF_CONDUCT.md).
+Security issues: see [SECURITY.md](./SECURITY.md) — **do not** open a public issue.
+
+## License
+
+[MIT](./LICENSE) © streamdigest contributors
