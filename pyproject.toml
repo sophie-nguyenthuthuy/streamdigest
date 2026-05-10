@@ -20,6 +20,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+gmail = ["imap-tools>=1.6.0"]
+slack = ["slack-sdk>=3.27.0"]
+linear = []  # uses httpx, already a core dependency
+all-sources = ["imap-tools>=1.6.0", "slack-sdk>=3.27.0"]
 dev = [
     "pytest>=8.0.0",
     "pytest-asyncio>=0.23.0",
@@ -51,7 +55,7 @@ no_implicit_optional = true
 files = ["streamdigest"]
 
 [[tool.mypy.overrides]]
-module = ["dlt.*", "duckdb.*", "prefect.*"]
+module = ["dlt.*", "duckdb.*", "prefect.*", "imap_tools.*", "slack_sdk.*"]
 ignore_missing_imports = true
 
 [tool.ruff]
